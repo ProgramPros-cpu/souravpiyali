@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Videos</title>
+  <style>
+    @font-face {
+      font-family: 'SamsungSharpSans';
+      src: url('samsungsharpsans-medium.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'LalSabuj';
+      src: url('LalSabuj_Bold.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: radial-gradient(circle, #ff001b, #560102);
+      color: #fff;
+      flex-direction: column;
+      text-align: center;
+      font-family: 'SamsungSharpSans', sans-serif;
+    }
+/* Transparent wedding photo styling, now sized small */
+.wedding-photo {
+      width: 150px;  /* Adjust this value to change the size */
+      height: auto;
+      opacity: 100%; /* Adjust opacity (0 to 1) as needed */
+
+    }
+    button {
+      font-family: 'LalSabuj';
+      margin: 20px;
+      padding: 20px 40px;
+      font-size: 1.5em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #ffc400;
+      color: #000000;
+      transition: background-color 0.3s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+    button:hover {
+      background-color: #eeff00;
+    }
+    video {
+      max-width: 90%;
+      height: auto;
+      border: 5px solid #fff;
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+    #countdown {
+      margin-top: 20px;
+      font-size: 2em;
+      color: #fff;
+      font-weight: bold;
+      background: linear-gradient(135deg, #ffc400, #ff6a00);
+      padding: 15px 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+      text-shadow: 2px 2px 4px #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="home">
+    <!-- Transparent wedding photo added at the top -->
+    <img src="wedding-photo.png" alt="Wedding Photo" class="wedding-photo" />
+    <div id="countdown"></div>
+    <h1>Welcome to Our Wedding Videos</h1>
+    <button onclick="window.location.href='?video=intro'"> শুরুর ভিডিও </button>
+    <button onclick="window.location.href='?video=wedding'"> বিয়ের ভিডিও </button>
+    <button onclick="window.location.href='?video=new'"> Professional ভিডিও নই </button>
+  </div>
+
+  <div id="video-container" style="display:none;">
+    <h1 id="video-title"></h1>
+    <video id="video-player" controls autoplay>
+      <source src="" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <br />
+    <button onclick="window.location.href='/'">Back to Home</button>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const video = urlParams.get('video');
+
+    const home = document.getElementById('home');
+    const videoContainer = document.getElementById('video-container');
+    const videoTitle = document.getElementById('video-title');
+    const videoPlayer = document.getElementById('video-player');
+
+    if (video) {
+      home.style.display = 'none';
+      videoContainer.style.display = 'block';
+
+      if (video === 'intro') {
+        videoTitle.textContent = 'Introduction Video';
+        videoPlayer.src = 'intro.mp4'; // Replace with your introduction video file
+      } else if (video === 'wedding') {
+        videoTitle.textContent = 'Wedding Video';
+        videoPlayer.src = 'wedding.mp4'; // Replace with your wedding video file
+      } else if (video === 'new') {
+        videoTitle.textContent = 'main Video';
+        videoPlayer.src = 'main.mp4'; // Replace with your new video file
+      }
+    }
+
+    // Countdown timer to 21st April 2025
+    function updateCountdown() {
+      const targetDate = new Date('2025-04-21T00:00:00').getTime();
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        document.getElementById('countdown').innerText = 'The event has passed!';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('countdown').innerText = `Countdown: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
